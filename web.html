@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DENISSA AURELIA IRAWAN</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body, html {
+      height: 100%;
+      font-family: 'Poppins', sans-serif;
+      overflow: hidden;
+    }
+
+    /* Background video */
+    #bgVideo {
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+
+    /* Container */
+    .container {
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+      color: white;
+      padding: 20px;
+    }
+
+    /* Kartu efek glass */
+    .card {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      padding: 25px;
+      border-radius: 25px;
+      box-shadow: 0 0 25px rgba(255, 64, 129, 0.6);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      max-width: 360px;
+      width: 90%;
+    }
+
+    .card:hover {
+      transform: scale(1.07);
+      box-shadow: 0 0 35px rgba(255, 64, 129, 0.9);
+    }
+
+    .card img {
+      width: 150px;
+      max-width: 85%;
+      border-radius: 15px;
+    }
+
+    .card h3 {
+      margin-top: 15px;
+      color: white;
+      font-weight: bold;
+      text-shadow: 0 0 8px rgba(0,0,0,0.4);
+    }
+
+    /* Pesan */
+    .message {
+      margin-top: 20px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.92);
+      border-radius: 20px;
+      box-shadow: 0 6px 25px rgba(0,0,0,0.4);
+      font-size: 1em;
+      width: 90%;
+      max-width: 380px;
+      min-height: 100px;
+      display: none;
+      color: #333;
+      position: relative;
+      overflow-y: auto;
+      max-height: 40vh;
+    }
+
+    .typing {
+      border-right: 3px solid #ff4081;
+      white-space: pre-wrap;
+      overflow: hidden;
+      animation: blink 0.8s infinite;
+    }
+
+    @keyframes blink {
+      50% { border-color: transparent; }
+    }
+
+    /* Tombol WhatsApp */
+    .wa-btn {
+      margin-top: 15px;
+      padding: 12px 20px;
+      background: linear-gradient(135deg, #25D366, #128C7E);
+      color: white;
+      border: none;
+      border-radius: 30px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: 0.3s;
+      display: none;
+      text-decoration: none;
+      font-weight: bold;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .wa-btn:hover {
+      background: linear-gradient(135deg, #1ebe5c, #0f6d59);
+      transform: scale(1.07);
+    }
+
+    /* Responsif untuk HP */
+    @media (max-width: 600px) {
+      .card img { width: 110px; }
+      .card h3 { font-size: 1em; }
+      .message { font-size: 0.9em; max-height: 45vh; }
+    }
+
+    /* Responsif untuk laptop */
+    @media (min-width: 1024px) {
+      .card img { width: 200px; }
+      .card h3 { font-size: 1.5em; }
+      .message { font-size: 1.1em; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Background video -->
+  <video autoplay muted loop playsinline id="bgVideo">
+    <source src="baground.mp4" type="video/mp4">
+    Browser kamu tidak mendukung video.
+  </video>
+
+  <div class="container">
+    <div class="card" onclick="showMessage()">
+      <img src="gambar1.jpeg" alt="Bear Cake">
+      <h3>💖 DI PENCET YAA SAYANG 🎂</h3>
+    </div>
+
+    <div class="message" id="birthdayMessage">
+      <span id="typedText" class="typing"></span>
+      <a id="waButton" class="wa-btn" target="_blank">💌 wa aku yah cantik</a>
+    </div>
+  </div>
+
+  <!-- Lagu ulang tahun -->
+  <audio id="birthdaySong" src="mencintaimu.mp3"></audio>
+
+  <script>
+    const message = "SELAMAT ULANG TAHUN DENISSA AURELIA IRAWAN 💕\nAku minta maaf kalau aku belum bisa jadi yang terbaik...\nSemoga kamu selalu bahagia, sehat, dan sukses.\n\nHappy Birthday Cantik! 🎂✨";
+    let i = 0;
+    let typingSpeed = 70;
+    let isTyping = false;
+
+    // Nomor WhatsApp tujuan (ganti dengan nomor kamu)
+    const waNumber = "6285882461914";
+
+    function typeWriter() {
+      if (i < message.length) {
+        document.getElementById("typedText").textContent += message.charAt(i);
+        i++;
+        setTimeout(typeWriter, typingSpeed);
+      } else {
+        document.getElementById("typedText").classList.remove("typing");
+        const waBtn = document.getElementById("waButton");
+        waBtn.style.display = "inline-block";
+        waBtn.href = `https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`;
+      }
+    }
+
+    function showMessage() {
+      if (isTyping) return;
+      document.getElementById("birthdayMessage").style.display = "block";
+      document.getElementById("birthdaySong").play();
+      isTyping = true;
+      typeWriter();
+    }
+  </script>
+</body>
+</html>
